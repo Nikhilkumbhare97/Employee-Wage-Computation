@@ -26,6 +26,11 @@ function getWorkHr() {
 		echo $empHr
 }
 
+function calDailyWage() {
+		local empHr=$1
+		wage=$(($empHr*$EMP_RATE_PER_HR))
+		echo $wage
+}
 
 while [[ $days -ne $DAYS_IN_MONTH && $hours -le $MAX_HRS_IN_MONTH ]]
 do
@@ -33,8 +38,9 @@ do
 		empCheck=$((RANDOM%3))
 		empHr="$( getWorkHr $empCheck)"
 		hours=$(($hours+$empHr))
-
+		dailyWage[$days]=$( calDailyWage $empHr )
 done
 
 empMonthWage=$(($hours*$EMP_RATE_PER_HR))
-echo $empMonthWage
+echo "Total Wage :"$empMonthWage
+echo "Daily Wage : "${dailyWage[@]}
