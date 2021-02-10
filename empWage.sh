@@ -44,3 +44,4 @@ done
 empMonthWage=$(($hours*$EMP_RATE_PER_HR))
 echo "Total Wage :"$empMonthWage
 echo "Daily Wage : "${dailyWage[@]}
+echo "Day : "${!dailyWage[@]}
