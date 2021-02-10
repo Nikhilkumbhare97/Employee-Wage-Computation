@@ -2,18 +2,24 @@
 
 #constant
 EMP_RATE_PER_HR=20
-WORK_HR=8
 
 #variable
-empCheck=$((RANDOM%2))
-isPresent=1
+empCheck=$((RANDOM%3))
+isPresentFullTime=1
+isPresentPartTime=2
 
 case $empCheck in
-	$isPresent)
-		salary=$(($WORK_HR*$EMP_RATE_PER_HR))
-		echo $salary
+	$isPresentFullTime)
+		WORK_HR=8
+		;;
+	$isPresentPartTime)
+		WORK_HR=4
 		;;
 	*)
+		WORK_HR=0
 		echo Employee is Absent
 		;;
 esac
+
+salary=$(($WORK_HR*$EMP_RATE_PER_HR))
+echo $salary
