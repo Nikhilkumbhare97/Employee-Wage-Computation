@@ -3,17 +3,17 @@
 #constant
 EMP_RATE_PER_HR=20
 DAYS_IN_MONTH=20
+MAX_HRS_IN_MONTH=100
 
 #variable
 isPresentFullTime=1
 isPresentPartTime=2
-empMonthWage=0
 days=0
 hours=0
 
-while [[ $days -ne 20 && $hours -le 100 ]]
-do
-		empCheck=$((RANDOM%3))
+function getWorkHr() {
+		local empCheck=$1
+
 		if [ $empCheck -eq $isPresentFullTime ]
 		then
 				empHr=8
@@ -23,11 +23,18 @@ do
 		else
 				empHr=0
 		fi
+		echo $empHr
+}
 
-		hours=$(($hours+$empHr))
+
+while [[ $days -ne $DAYS_IN_MONTH && $hours -le $MAX_HRS_IN_MONTH ]]
+do
 		((days++))
+		empCheck=$((RANDOM%3))
+		empHr="$( getWorkHr $empCheck)"
+		hours=$(($hours+$empHr))
 
-		empMonthWage=$(($empMonthWage+$empHr*$EMP_RATE_PER_HR))
 done
 
+empMonthWage=$(($hours*$EMP_RATE_PER_HR))
 echo $empMonthWage
